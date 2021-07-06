@@ -1,5 +1,26 @@
 # Getting Started with Angular - My Store
 
+## CodeAffection Angular Material
+This tutorial was branched off from the master Angular minimal app and followed
+[Complete Angular Material Tutorial - CRUD Form Design](https://www.youtube.com/watch?v=ZGWOc37kQkw)
+In his video he used direct npm commands but the [latest version](https://material.angular.io/guide/schematics) supported ng add schematics like 
+ng add @angular/material and ng add @angular/cdk Since I haven't installed Angular CLI globally I used **npm run ng add @angular/material**
+The "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css" was added by the schematics to the angular.json styles section.
+**link href="https://fonts.googleapis.com/icon?family=Material+Icons"** rel="stylesheet" was also added automatically to index.html
+To create a component **npm run ng g c employees** Since the project was initialized with minimal angular.json remembers these settings for schematics:
+```
+"@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "skipTests": true
+        },
+```
+**npm run ng g c employees/employee** created a component under employees.
+The ngOnInit(): void {} in the component.ts files raised a linting error: Lifecycle methods should not be empty, and obviously lint --fix is not willing to fix these, so I changed the rule to a warning with adding "@angular-eslint/no-empty-lifecycle-method":"warn" to .eslintrc.json
+
+**npm run ng g s shared/employee** created a service
+The linting errors didn't prevent successfull compilation and serving with **npm start**
+
 ## Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 
