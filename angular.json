@@ -102,6 +102,9 @@
               "browserTarget": "gettingstartedwithangular-mystore:build:development"
             }
           },
+          "options": {
+            "port":4200
+          },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

@@ -21,6 +21,34 @@ The ngOnInit(): void {} in the component.ts files raised a linting error: Lifecy
 **npm run ng g s shared/employee** created a service
 The linting errors didn't prevent successfull compilation and serving with **npm start**
 
+[Angular Material component documentation](https://material.angular.io/components/toolbar/api) shows which modules to be imported into the app.modules.ts 
+**npm run ng g m material** is to create a custom module for importing the material components.
+
+Make sure to properly import a Material module **import {MatToolbarModule} from "@angular/material/toolbar"**, otherwise you will have the error message "Value at position X in the NgModule.imports is not a reference"
+Reactive (Model Driven) form handling uses FormGroup in the service. **ReactiveFormsModule** should be imported from "@angular/forms" in the app.module.ts.
+When importing a Material component module in material.module.ts, remember to export it, too, otherwise the corresponding mat-tag (mat-grid-list for example) will not be recognized in component templates. mat-grid-list
+```
+import {MatToolbarModule} from "@angular/material/toolbar"
+import {MatGridListModule} from "@angular/material/grid-list"
+@NgModule({
+  declarations: [],
+  imports: [CommonModule, MatToolbarModule,MatGridListModule],
+  exports: [MatToolbarModule,MatGridListModule]
+})
+```
+Pay attention, VSC doesn't let select ng-container and other structural elements. Neither the rounded bracket (click)="onClick()" has no special intellisense support. Double quotes is not required for most locations when editing template (click)=onClick() works fine.
+For radio group and selection fields only string values work properly; checkbox supports boolean and date picker supports Date.
+
+
+## What's Next?
+The CodeAffection video wasn\t bad at all, but I am not sure if I am watching another video from him, since his architecture quite mediocre, and he is a typical JavaScript programmer.
+- Record a video with explanations what has been done and how CodeAffection program was improved.
+- [CodeHandbook How To Create Angular Material Reactive Forms](https://www.youtube.com/watch?v=ebgnTuVNmzA) I have watched, and it is short and uses FormBuilder service, which is excellently injectable.
+- [Prime NG has a Form Layout](https://primefaces.org/primeng/showcase/#/primeflex/formlayout)
+- [This explains the difference](https://appdividend.com/2019/12/16/angular-form-control-example/) between reactive and template driven forms.
+- [Angular Forms official](https://angular.io/guide/forms-overview) documentation
+- [creating-table-with-reactive-forms-in-angular-9-using-primeng-table2](https://www.c-sharpcorner.com/article/creating-table-with-reactive-forms-in-angular-9-using-primeng-table2/)
+
 ## Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 

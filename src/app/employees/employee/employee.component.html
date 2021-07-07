@@ -1,0 +1,58 @@
+<form class="form-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>
+          Employee Details
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <input type=hidden formControlName=$key />
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Full Name <mat-icon>favorite</mat-icon></mat-label>
+              <input formControlName=fullName matInput placeholder="Enter your full name">
+              <mat-icon matSuffix>face</mat-icon>
+              <mat-hint>Remember to enter your full name since it is mandatory</mat-hint>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Your Email Address</mat-label>
+              <input formControlName=email matInput placeholder="Email">
+              <mat-icon matSuffix>email</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Mobile Phone Number</mat-label>
+              <input formControlName=mobile matInput placeholder="Mobile">
+              <mat-icon matSuffix>phone</mat-icon>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>City of Residence</mat-label>
+              <input formControlName=city matInput placeholder="City">
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-radio-group formControlName=gender>
+              <mat-radio-button value=1 style="margin: 5px;">Male</mat-radio-button>
+              <mat-radio-button value=2 style="margin: 5px;">Feale</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-select formControlName=department placeholder="Department Name"></mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
