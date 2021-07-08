@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { EmployeesComponent } from "./employees/employees.component"
 import { EmployeeComponent } from "./employees/employee/employee.component"
 import { EmployeeService } from "./shared/employee.service"
-import { ReactiveFormsModule, NgModel } from "@angular/forms"
+import { ReactiveFormsModule, FormsModule } from "@angular/forms"
 import {MatToolbarModule} from "@angular/material/toolbar"
 import {MatGridListModule} from "@angular/material/grid-list"
 import {MatFormFieldModule} from "@angular/material/form-field"
@@ -19,17 +19,19 @@ import { MatNativeDateModule } from "@angular/material/core"
 import { MatButtonModule } from "@angular/material/button"
 import { MatListModule} from "@angular/material/list"
 import {MatCheckboxModule} from "@angular/material/checkbox"
+import { UserprofileinfoComponent } from "./userprofileinfo/userprofileinfo.component"
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeesComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    UserprofileinfoComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule, FormsModule,
     MatToolbarModule,MatGridListModule,MatFormFieldModule,MatInputModule,MatIconModule,MatRadioModule,MatSelectModule,
     MatCardModule,
     MatButtonModule,

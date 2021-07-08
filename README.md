@@ -39,7 +39,6 @@ import {MatGridListModule} from "@angular/material/grid-list"
 Pay attention, VSC doesn't let select ng-container and other structural elements. Neither the rounded bracket (click)="onClick()" has no special intellisense support. Double quotes is not required for most locations when editing template (click)=onClick() works fine.
 For radio group and selection fields only string values work properly; checkbox supports boolean and date picker supports Date.
 
-
 ## What's Next?
 The CodeAffection video wasn\t bad at all, but I am not sure if I am watching another video from him, since his architecture quite mediocre, and he is a typical JavaScript programmer.
 - Record a video with explanations what has been done and how CodeAffection program was improved.
@@ -48,6 +47,26 @@ The CodeAffection video wasn\t bad at all, but I am not sure if I am watching an
 - [This explains the difference](https://appdividend.com/2019/12/16/angular-form-control-example/) between reactive and template driven forms.
 - [Angular Forms official](https://angular.io/guide/forms-overview) documentation
 - [creating-table-with-reactive-forms-in-angular-9-using-primeng-table2](https://www.c-sharpcorner.com/article/creating-table-with-reactive-forms-in-angular-9-using-primeng-table2/)
+- [Angular For Beginners Guide by JavaTechie](https://www.youtube.com/watch?v=Tf_VWOSKOQ4&list=PLVz2XdJiJQxwAhzEZSpDqXlfT7XvNPDIE)
+
+## CodeHandbook Angular Material Reactive Forms
+FormsModule was added, too, to app.modules.ts (hmm why, we'll see later???)
+I created a separate UI component for this sample **npm run ng g c userprofileinfo**.
+This form builder creates form group and controls behind the scene, which is cool, but then you cannot use ```[formControl]``` in the template
+only formControlName, so the compiler has no chance to check if the name is misspelled. But, when the form is created in the Chrome debugger window an error is show complaining about a non-matching field.
+To decide the form to show open app.components.ts and change the component template from app-userprofileinfo to app-employees.
+At first I simply didn't understood where the hell did he have those styling classes row, col-sm-6, col-md-6. I've even cloned your GitHub project, and I didn't find the trick. Then, I saw his video on [How to Install Bootstrap in Angular](https://www.youtube.com/watch?v=g9ucAJU0Bb8), and voila, I understood.The trick is that bootstrap and JQuery are installed **npm install bootstrap jquery popper** and then configured in the build configuration in angular.json
+```
+"styles": [
+  "src/styles.css",
+  "node_modules/bootstrap/dist/css/bootstrap.min.css"
+],
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/popper.js/dist/umd/popper.min.js",
+  "node_modules/bootstrap/dist/js/bootstrap.min.js"
+]
+```
 
 ## Angular Project Setup without Global CLI 
 
