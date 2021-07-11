@@ -1,74 +1,6 @@
 # Getting Started with Angular - My Store
 
-## CodeAffection Angular Material
-This tutorial was branched off from the master Angular minimal app and followed
-[Complete Angular Material Tutorial - CRUD Form Design](https://www.youtube.com/watch?v=ZGWOc37kQkw)
-In his video he used direct npm commands but the [latest version](https://material.angular.io/guide/schematics) supported ng add schematics like 
-ng add @angular/material and ng add @angular/cdk Since I haven't installed Angular CLI globally I used **npm run ng add @angular/material**
-The "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css" was added by the schematics to the angular.json styles section.
-**link href="https://fonts.googleapis.com/icon?family=Material+Icons"** rel="stylesheet" was also added automatically to index.html
-To create a component **npm run ng g c employees** Since the project was initialized with minimal angular.json remembers these settings for schematics:
-```
-"@schematics/angular:component": {
-          "inlineTemplate": true,
-          "inlineStyle": true,
-          "skipTests": true
-        },
-```
-**npm run ng g c employees/employee** created a component under employees.
-The ngOnInit(): void {} in the component.ts files raised a linting error: Lifecycle methods should not be empty, and obviously lint --fix is not willing to fix these, so I changed the rule to a warning with adding "@angular-eslint/no-empty-lifecycle-method":"warn" to .eslintrc.json
-
-**npm run ng g s shared/employee** created a service
-The linting errors didn't prevent successfull compilation and serving with **npm start**
-
-[Angular Material component documentation](https://material.angular.io/components/toolbar/api) shows which modules to be imported into the app.modules.ts 
-**npm run ng g m material** is to create a custom module for importing the material components.
-
-Make sure to properly import a Material module **import {MatToolbarModule} from "@angular/material/toolbar"**, otherwise you will have the error message "Value at position X in the NgModule.imports is not a reference"
-Reactive (Model Driven) form handling uses FormGroup in the service. **ReactiveFormsModule** should be imported from "@angular/forms" in the app.module.ts.
-When importing a Material component module in material.module.ts, remember to export it, too, otherwise the corresponding mat-tag (mat-grid-list for example) will not be recognized in component templates. mat-grid-list
-```
-import {MatToolbarModule} from "@angular/material/toolbar"
-import {MatGridListModule} from "@angular/material/grid-list"
-@NgModule({
-  declarations: [],
-  imports: [CommonModule, MatToolbarModule,MatGridListModule],
-  exports: [MatToolbarModule,MatGridListModule]
-})
-```
-Pay attention, VSC doesn't let select ng-container and other structural elements. Neither the rounded bracket (click)="onClick()" has no special intellisense support. Double quotes is not required for most locations when editing template (click)=onClick() works fine.
-For radio group and selection fields only string values work properly; checkbox supports boolean and date picker supports Date.
-
-## What's Next?
-The CodeAffection video wasn\t bad at all, but I am not sure if I am watching another video from him, since his architecture quite mediocre, and he is a typical JavaScript programmer.
-- Record a video with explanations what has been done and how CodeAffection program was improved.
-- [CodeHandbook How To Create Angular Material Reactive Forms](https://www.youtube.com/watch?v=ebgnTuVNmzA) I have watched, and it is short and uses FormBuilder service, which is excellently injectable.
-- [Prime NG has a Form Layout](https://primefaces.org/primeng/showcase/#/primeflex/formlayout)
-- [This explains the difference](https://appdividend.com/2019/12/16/angular-form-control-example/) between reactive and template driven forms.
-- [Angular Forms official](https://angular.io/guide/forms-overview) documentation
-- [creating-table-with-reactive-forms-in-angular-9-using-primeng-table2](https://www.c-sharpcorner.com/article/creating-table-with-reactive-forms-in-angular-9-using-primeng-table2/)
-- [Angular For Beginners Guide by JavaTechie](https://www.youtube.com/watch?v=Tf_VWOSKOQ4&list=PLVz2XdJiJQxwAhzEZSpDqXlfT7XvNPDIE)
-
-## CodeHandbook Angular Material Reactive Forms
-FormsModule was added, too, to app.modules.ts (hmm why, we'll see later???)
-I created a separate UI component for this sample **npm run ng g c userprofileinfo**.
-This form builder creates form group and controls behind the scene, which is cool, but then you cannot use ```[formControl]``` in the template
-only formControlName, so the compiler has no chance to check if the name is misspelled. But, when the form is created in the Chrome debugger window an error is show complaining about a non-matching field.
-To decide the form to show open app.components.ts and change the component template from app-userprofileinfo to app-employees.
-At first I simply didn't understood where the hell did he have those styling classes row, col-sm-6, col-md-6. I've even cloned your GitHub project, and I didn't find the trick. Then, I saw his video on [How to Install Bootstrap in Angular](https://www.youtube.com/watch?v=g9ucAJU0Bb8), and voila, I understood.The trick is that bootstrap and JQuery are installed **npm install bootstrap jquery popper** and then configured in the build configuration in angular.json
-```
-"styles": [
-  "src/styles.css",
-  "node_modules/bootstrap/dist/css/bootstrap.min.css"
-],
-"scripts": [
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/popper.js/dist/umd/popper.min.js",
-  "node_modules/bootstrap/dist/js/bootstrap.min.js"
-]
-```
-
-## Angular Project Setup without Global CLI 
+## Step 1: Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 
 A number of tutorial videos on Angular are available still far the best source is the official documentation and its examples. 
@@ -112,6 +44,74 @@ When any TS files are opened with these ES lint rules in place, Visual Studio Co
 To automate fixing the issues conveniently the script **"fix": "ng lint --fix"** can be added to package.json. 
 
 To run the application use **npm start**, which executes ng serve. 
+
+## Step 2: Remaking CodeAffection's (Youtube) Angular Material Example
+After I have initialized the project with *npx ng new --minimal* and configured ESLint, I decided to make a quick example with Angular Material and I picked 
+[Complete Angular Material Tutorial - CRUD Form Design](https://www.youtube.com/watch?v=ZGWOc37kQkw)
+In the video the author used direct npm commands to install Angular Material packages, but the [latest version](https://material.angular.io/guide/schematics) supported *ng add* schematics: 
+- If you have Angular CLI globally installed you use *ng add @angular/material*, since I haven't installed Angular CLI globally I used **npm run ng add @angular/material**
+  - [@angular/cdk](https://material.angular.io/cdk/categories) package - providing behavior primitives like accordion, bidirectionality, layout, collection, and so on and forth - is automatically added too.
+  - The "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css" was added by the schematics to the *angular.json* styles section.
+  - *link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"* was also added automatically to *index.html*
+- To create the employees component I used **npm run ng g c employees** 
+- Since the project was initialized with the minimal option, angular.json "remembers" this for later additions of schematics:
+```
+"@schematics/angular:component": {
+          "inlineTemplate": true,
+          "inlineStyle": true,
+          "skipTests": true
+        },
+```
+- **npm run ng g c employees/employee** created an employee component under employees.
+The ngOnInit(): void {} in the component.ts files raised a linting error: Lifecycle methods should not be empty, and obviously lint --fix is not willing to fix these, so I changed the rule to a warning with adding "@angular-eslint/no-empty-lifecycle-method":"warn" to .eslintrc.json
+
+- With **npm run ng g s shared/employee** I created a service. I didn't foloow exactly the author's approach, since I think a service component should be independent from any UI machinery, it should provide only the data for the UI components.
+
+Important to note that linting errors didn't prevent successfull compilation and serving with **npm start**
+
+I used the [Angular Material component documentation](https://material.angular.io/components/toolbar/api) to learn which modules to be imported into the app.modules.ts 
+The author on the video created a custom module for importing and reexporting the material components, but I found it terribly meaningless, cumbersome, tedious and error-prone, so I deleted it; so, don't look for it in the source code.
+
+Make sure to properly import a Material module **import {MatToolbarModule} from "@angular/material/toolbar"**, otherwise you will have the error message "Value at position X in the NgModule.imports is not a reference"
+Reactive (Model Driven) form handling uses *FormGroup* in the service. **ReactiveFormsModule** should be imported from "@angular/forms" in the *app.module.ts*.
+Before using a Material component in the template, remember to import that component module in app.module.ts, otherwise the corresponding mat-tag (mat-grid-list for example) will not be shown.
+
+Pay attention, VSC (sometimes?) doesn't let select *ng-container* and other structural elements. Similarly the rounded bracket *(click)="onClick()"* has no special intellisense support in VSC, despite I have installed Angular Language Service extension. 
+Note, that *double quotes* are not required for most locations when editing template **(click)=onClick()** just works fine, which I love, since this way the template is less cluttered.
+A major observation was that for *radio group and selection fields* only string values work properly; checkbox supports boolean and date picker supports Date nicely, however.
+
+## Step 3: Remaking CodeHandbook Angular Material Reactive Forms
+The [CodeHandbook How To Create Angular Material Reactive Forms](https://www.youtube.com/watch?v=ebgnTuVNmzA) sample used FormBuilder instead of FormGroup and FormControls directly. FormBuilder is actually a wrapper on top of the FormGroup and FormControl infrastructure, it's only a convenience function. Actually an automatically injectable service, just define as parameter to a UI component's constructor and the Angular machinery injects an instance automatically.
+The author added *FormsModule*, too, to app.modules.ts but I didn't since my understanding was that it is required only for [template driven forms](https://angular.io/guide/forms), it is not needed for reactive forms.
+I created a separate UI component for this sample **npm run ng g c userprofileinfo**.
+The form builder creates form group and controls behind the scene, which looks cool at first, but then you cannot use ```[formControl]``` in the template
+only formControlName, so the compiler has no chance to check, if the name is misspelled. However, when the form is created in the Chrome debugger window and if there is a spelling error, then a red error message is show complaining about a non-matching field.
+
+To decide which form to show open *app.components.ts* and change the component template from ```app-userprofileinfo``` to ```app-employees```.
+
+At first I simply didn't understood where the hell he had those styling classes *row, col-sm-6, col-md-6*? I've even cloned your GitHub project, and I didn't find the trick. Then, I saw his video on [How to Install Bootstrap in Angular](https://www.youtube.com/watch?v=g9ucAJU0Bb8), and voila, I understood.The trick is that bootstrap and JQuery are installed *npm install bootstrap jquery popper.js* and then configured in the build configuration in angular.json
+```
+"styles": [
+  "src/styles.css",
+  "node_modules/bootstrap/dist/css/bootstrap.min.css"
+],
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/popper.js/dist/umd/popper.min.js",
+  "node_modules/bootstrap/dist/js/bootstrap.min.js"
+]
+```
+For details check out this video, actually, I havent installed these, since I didn't want to delve into learning Bootstrap styling for this demo, I wanted to keep the layout total simple.
+
+# What's Next after this 1st and 2nd Sample?
+- [Prime NG has a Form Layout](https://primefaces.org/primeng/showcase/#/primeflex/formlayout)
+- [This explains the difference](https://appdividend.com/2019/12/16/angular-form-control-example/) between reactive and template driven forms.
+- [Angular Forms official](https://angular.io/guide/forms-overview) documentation
+- [creating-table-with-reactive-forms-in-angular-9-using-primeng-table2](https://www.c-sharpcorner.com/article/creating-table-with-reactive-forms-in-angular-9-using-primeng-table2/)
+- [Angular For Beginners Guide by JavaTechie](https://www.youtube.com/watch?v=Tf_VWOSKOQ4&list=PLVz2XdJiJQxwAhzEZSpDqXlfT7XvNPDIE)
+
+
+# This Section was Generated by the NG NEW Command
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
 

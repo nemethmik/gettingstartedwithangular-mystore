@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { EmployeesComponent } from "./employees/employees.component"
 import { EmployeeComponent } from "./employees/employee/employee.component"
 import { EmployeeService } from "./shared/employee.service"
-import { ReactiveFormsModule, FormsModule } from "@angular/forms"
+import { ReactiveFormsModule } from "@angular/forms"
 import {MatToolbarModule} from "@angular/material/toolbar"
 import {MatGridListModule} from "@angular/material/grid-list"
 import {MatFormFieldModule} from "@angular/material/form-field"
@@ -31,7 +31,7 @@ import { UserprofileinfoComponent } from "./userprofileinfo/userprofileinfo.comp
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule, FormsModule,
+    ReactiveFormsModule, 
     MatToolbarModule,MatGridListModule,MatFormFieldModule,MatInputModule,MatIconModule,MatRadioModule,MatSelectModule,
     MatCardModule,
     MatButtonModule,
