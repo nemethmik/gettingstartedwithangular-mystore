@@ -68,7 +68,7 @@ import { EmployeeService, TEmployee} from "src/app/shared/employee.service"
           <p>
             <mat-checkbox formControlName=isPermanent>Permanent Employment</mat-checkbox>
           <p>
-          <button mat-raised-button color="primary" type="submit" [disabled]="fg.invalid" (click)=onSave()>Save</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]=fg.invalid (click)=onSave()>Save</button>
           <button mat-raised-button color="warn" (click)=onClear() style="margin: 5px;">Clear</button>
     </form>
   </div>

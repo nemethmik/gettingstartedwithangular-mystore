@@ -103,6 +103,20 @@ At first I simply didn't understood where the hell he had those styling classes 
 ```
 For details check out this video, actually, I havent installed these, since I didn't want to delve into learning Bootstrap styling for this demo, I wanted to keep the layout total simple.
 
+*How to use enums in Angular templates?* In an Angular template you can use only public members of the component the template is attached to. So, g;obally defined variables, constants cannot be used directly, which is a great concept:
+Since enums are [valid JavaScript](https://masteringjs.io/tutorials/fundamentals/enum) objects they can be easily used in templates with a simple trick: define a member in the component class assigned to the enum:
+```
+enum TGender {male = "M", female = "F"}
+export class EmployeeService {
+  genderType = TGender
+  ...
+
+<mat-radio-group [formControl]=fc.gender>
+  <mat-radio-button value={{service.genderType.male}} style="margin: 5px;">Male</mat-radio-button>
+  <mat-radio-button value={{service.genderType.female}} style="margin: 5px;">Female</mat-radio-button>
+</mat-radio-group>  
+```
+
 # What's Next after this 1st and 2nd Sample?
 - [Prime NG has a Form Layout](https://primefaces.org/primeng/showcase/#/primeflex/formlayout)
 - [This explains the difference](https://appdividend.com/2019/12/16/angular-form-control-example/) between reactive and template driven forms.

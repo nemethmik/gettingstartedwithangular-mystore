@@ -18,7 +18,7 @@ export type TEmployee = {
   providedIn: "root"
 })
 export class EmployeeService {
-  genderType = {male:TGender.male,female:TGender.female}
+  genderType = TGender
   departments :{id:TDepartmentId, description:string}[] = [{id:"1",description:"Sales"},{id:"2",description:"Purchasing"},{id:"3",description:"R&D"}]
   employeeData:TEmployee = {
     $key: 1,
