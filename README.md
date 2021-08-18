@@ -7,6 +7,12 @@ The [My Store](https://angular.io/start#create-the-sample-project) sample applic
     - [The Toolbar examples](https://material.angular.io/components/toolbar/examples) are good starting point to copy paste. The examples require `import {MatIconModule} from "@angular/material/icon"` and `import {MatButtonModule} from "@angular/material/button"`, too.
         - Don't keep the `<p>` element around the toolbar component, otherwise you will have a nasty white stripe/space above the toolbar.
 
+## Adding Products List
+- The data for the app are coming from a simple TS file *products.ts*, which I copied from the [stackblitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html) starter application.
+- Then I created my second UI component **npm run ng generate component product-list**
+- Since copying had single quotes and semicolons, run *npm run fix*
+- Then I implemented the layout of products and the app.components template according to the stackblitz sample.
+
 ## Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 
