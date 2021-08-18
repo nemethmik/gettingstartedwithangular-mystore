@@ -2,7 +2,10 @@
 ## Adding Material Schematic and Toolbar
 The [My Store](https://angular.io/start#create-the-sample-project) sample application has two components preinitialized on [StackBlitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html). This sample didn't use any UI library, in my version I use [Angular Material](https://material.angular.io/components/toolbar/overview), possibly the most popular UI library for Angular.
 - **npm run ng add @angular/material** to add Angular Material. For theme I picked Indigo/Pink.
-- **npm run ng generate component top-bar** to create a top-bar UI component.
+- **npm run ng generate component top-bar** to create a top-bar UI component. Since I use double quotes and no-semicolons lint rules: **npm run fix**
+    - [The API documentation of the toolbar component](https://material.angular.io/components/toolbar/api) explains how to import the module. This import should be done in the *app.module.ts* `import {MatToolbarModule} from "@angular/material/toolbar"` as usual with @NgModule imports.
+    - [The Toolbar examples](https://material.angular.io/components/toolbar/examples) are good starting point to copy paste. The examples require `import {MatIconModule} from "@angular/material/icon"` and `import {MatButtonModule} from "@angular/material/button"`, too.
+        - Don't keep the `<p>` element around the toolbar component, otherwise you will have a nasty white stripe/space above the toolbar.
 
 ## Angular Project Setup without Global CLI 
 
