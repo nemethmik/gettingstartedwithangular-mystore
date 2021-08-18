@@ -1,4 +1,8 @@
 # Getting Started with Angular - My Store
+## Adding Material Schematic and Toolbar
+The [My Store](https://angular.io/start#create-the-sample-project) sample application has two components preinitialized on [StackBlitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html). This sample didn't use any UI library, in my version I use [Angular Material](https://material.angular.io/components/toolbar/overview), possibly the most popular UI library for Angular.
+- **npm run ng add @angular/material** to add Angular Material. For theme I picked Indigo/Pink.
+- **npm run ng generate component top-bar** to create a top-bar UI component.
 
 ## Angular Project Setup without Global CLI 
 
