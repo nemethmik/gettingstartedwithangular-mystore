@@ -13,6 +13,18 @@ The [My Store](https://angular.io/start#create-the-sample-project) sample applic
 - Since copying had single quotes and semicolons, run *npm run fix*
 - Then I implemented the layout of products and the app.components template according to the stackblitz sample.
 
+## Displaying Data in the Products List
+Just follow the instructions in the [Create the product list](https://angular.io/start#create-the-product-list) section.
+For the section [Pass data to a child component](https://angular.io/start#pass-data-to-a-child-component) 
+create the UI component with **npm run ng generate component product-alerts**
+After the initial implementation with regular HTML, I modified it to use Amgular Material List component. 
+The accompanying video is [Angular Getting Started 06 - Displaying Products, Buttons and Toaster](https://www.youtube.com/watch?v=CtLKlW7BC_E)
+
+Since Angular Material has no toast component, I used [ngx-toastr](https://www.npmjs.com/package/ngx-toastr) instead of the plain browser *alert*.
+**npm install ngx-toastr** Then I followed the instructions on the ngx-toastr documnet page.
+The *"./node_modules/ngx-toastr/toastr.css"* is included in the NPM package, and should be added to *angular.json*
+The ProductListComponent constructor is expecting a ToaterService, which is automatically injected by the Angular machinery.    
+
 ## Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 
