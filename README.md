@@ -126,6 +126,11 @@ The accompanying video explains all details [Angular Getting Started 08 - Produc
 describes three ways where components, siblings, parents and children could communicate with each other even when they are instantiated via router outlet(s).
 The main idea is that this technique makes a listener/observer to all output emitters of all the components created/instantiated via the router outlet of the app.component. The video [Angular Getting Started 09 Converting App Component to a Messaging Hub for All Routed Components](https://youtu.be/yIsri1HS9_4) explains the solution in detail.
 
+The other option is very similar to the previous one, but instead of subscribing to all and each emitters, an event handler object is sent to the 
+routed (child) components with a bunch of methods, and it's the job of the child component to call the appropriate ones. 
+Actuallzy this is terribly similar to the mobile application architecture I elaborated for a fa,ily of mobile applications (Xamarin Android) using the pattern (Screens - Command Interfaces - Events Interfaces)
+The video explanation for this solution is here [Angular Getting Started 10 Passing an Event Handler Object to the Routed Child Components](https://youtu.be/jCqG-OkoUSY)   
+
 ----
 # Appendix: The standard Angular Doc for CLI Tasks and Scrits
 

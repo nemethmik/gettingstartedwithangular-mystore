@@ -6,4 +6,8 @@ export interface Product {
     price: number;
     description: string;
   }
-
+export interface IMyStoreEvents {
+  onShareButtonClick(p:Product):void,
+  onLikeButtonClick(p:Product):void,
+  onNotify(p:Product):void,
+}

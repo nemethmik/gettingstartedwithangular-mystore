@@ -3,18 +3,18 @@ import {Subscription} from "rxjs"
 import { ToastrService } from "ngx-toastr"
 import {ProductDetailsComponent} from "./product-details.component"
 import {ProductListComponent} from "./product-list.component"
-import {Product} from "./appconstantsandtypes"
+import {Product,IMyStoreEvents} from "./appconstantsandtypes"
 
 @Component({
   selector: "app-root",
   template: `
     <app-top-bar></app-top-bar>
     <!-- app-product-list></app-product-list -->
-    <router-outlet (activate)=subscribeToChildComponent($event) (deactivate)=unsubscribe()></router-outlet>
+    <router-outlet (activate)=subscribeToChildComponent($event) (deactivate)=unsubscribe($event)></router-outlet>
   `,
   styles: []
 })
-export class AppComponent {
+export class AppComponent implements IMyStoreEvents {
   constructor(private toastr: ToastrService){}
   likeSubscription: Subscription | null = null
   shareSubscription: Subscription | null = null
@@ -24,11 +24,16 @@ export class AppComponent {
     // console.log("AppComponent:subscribeToChildComponent",routedComponent)
     if(routedComponent instanceof ProductDetailsComponent) {
       // console.log("AppComponent:routed component is ProductDetailsComponent",routedComponent)
-      this.likeSubscription = (routedComponent as ProductDetailsComponent).like.subscribe((p:Product) => this.onLikeButtonClick(p))
-      this.shareSubscription = (routedComponent as ProductDetailsComponent).share.subscribe((p:Product) => this.onShareButtonClick(p))
+      routedComponent.myStoreEventHandler = this
+      this.likeSubscription = routedComponent.like.subscribe((p:Product) => this.onLikeButtonClick(p))
+      this.shareSubscription = routedComponent.share.subscribe((p:Product) => {
+        console.log("AppComponent:ProductDetailsComponent event via emitter",p)
+        this.onShareButtonClick(p)
+      })
     } else if (routedComponent instanceof ProductListComponent) {
-      this.notifySubscription = (routedComponent as ProductListComponent).notify.subscribe((p:Product) => this.onNotify(p))
-      this.shareSubscription = (routedComponent as ProductListComponent).share.subscribe((p:Product) => this.onShareButtonClick(p))
+      routedComponent.myStoreEventHandler = this
+      this.notifySubscription = routedComponent.notify.subscribe((p:Product) => this.onNotify(p))
+      this.shareSubscription = routedComponent.share.subscribe((p:Product) => this.onShareButtonClick(p))
     }
   }
   onShareButtonClick(p:Product) {
@@ -41,12 +46,15 @@ export class AppComponent {
     //window.alert(`You will be notified when ${p.name} goes on sale`)
     this.toastr.success(`You will be notified when ${p.name} goes on sale`, "My Store")
   }
-  unsubscribe() {
+  unsubscribe(routedComponent:any) {
     this.likeSubscription?.unsubscribe()
     this.likeSubscription = null
     this.shareSubscription?.unsubscribe()
     this.shareSubscription = null
     this.notifySubscription?.unsubscribe()
     this.notifySubscription = null
+    if(routedComponent instanceof ProductDetailsComponent || routedComponent instanceof ProductListComponent) {
+      routedComponent.myStoreEventHandler = null
+    }
   }
 }

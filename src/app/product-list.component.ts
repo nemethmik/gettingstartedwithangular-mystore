@@ -2,8 +2,7 @@ import { Component, OnInit } from "@angular/core"
 import { Output, EventEmitter } from "@angular/core"
 import { ToastrService } from "ngx-toastr"
 import { products } from "./products"
-import {Product,RouteNames} from "./appconstantsandtypes"
-
+import {Product,RouteNames,IMyStoreEvents} from "./appconstantsandtypes"
 /*
     <div style="padding: 0 16px;"> <!-- display: flex;flex-direction: row; -->
       <h2>Products</h2>
@@ -36,15 +35,18 @@ export class ProductListComponent { //implements OnInit { ngOnInit(): void {  }
   products = products // This looks weird but TS knows how to interpret it: it creates a member variable and links it to the imported products object 
   @Output() notify = new EventEmitter<Product>()
   @Output() share = new EventEmitter<Product>()
+  myStoreEventHandler: IMyStoreEvents | null = null
   constructor(private toastr: ToastrService) { }
   onShareButtonClick(p:Product) {
     //window.alert(`${p.name} has been shared`)
     //this.toastr.success(`${p.name} has been shared`, "My Store")
-    this.share.emit(p)
+    if(this.myStoreEventHandler) this.myStoreEventHandler.onShareButtonClick(p)
+    else this.share.emit(p)
   }
   onNotify(p:Product) {
     //window.alert(`You will be notified when ${p.name} goes on sale`)
     //this.toastr.success(`You will be notified when ${p.name} goes on sale`, "My Store")
-    this.notify.emit(p)
+    if(this.myStoreEventHandler) this.myStoreEventHandler.onNotify(p)
+    else this.notify.emit(p)
   }
 }
