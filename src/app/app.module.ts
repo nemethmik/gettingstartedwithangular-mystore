@@ -5,6 +5,7 @@ import {MatIconModule} from "@angular/material/icon"
 import {MatButtonModule} from "@angular/material/button"
 import {MatListModule} from "@angular/material/list"
 import { ToastrModule } from "ngx-toastr"
+import { RouterModule } from "@angular/router"
 import { AppComponent } from "./app.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { TopBarComponent } from "./top-bar/top-bar.component"
@@ -26,6 +27,9 @@ import { ProductAlertsComponent } from "./product-alerts/product-alerts.componen
     MatButtonModule,
     MatListModule,
     ToastrModule.forRoot(),
+    RouterModule.forRoot([
+      { path: "", component: ProductListComponent },
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

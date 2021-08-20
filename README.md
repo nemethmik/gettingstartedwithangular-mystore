@@ -23,7 +23,19 @@ The accompanying video is [Angular Getting Started 06 - Displaying Products, But
 Since Angular Material has no toast component, I used [ngx-toastr](https://www.npmjs.com/package/ngx-toastr) instead of the plain browser *alert*.
 **npm install ngx-toastr** Then I followed the instructions on the ngx-toastr documnet page.
 The *"./node_modules/ngx-toastr/toastr.css"* is included in the NPM package, and should be added to *angular.json*
-The ProductListComponent constructor is expecting a ToaterService, which is automatically injected by the Angular machinery.    
+The ProductListComponent constructor is expecting a ToaterService, which is automatically injected by the Angular machinery.
+
+## Adding Navigation
+[Adding Navigation](https://angular.io/start/start-routing) is the next section in the Angular Getting Started tutorial series.
+It assumes that the router module has been configured. Since I haven't configured router I'll do it manually, which is dead easy.
+### Adding Router to an Existing Project
+What is important that the `<base href="/">` in *index.html* has been set even when you didn't request router installation upon project initialization.
+The [add-routing-existing-angular-project](https://www.samjulien.com/add-routing-existing-angular-project) covers the topic sufficiently.
+- Add `import { RouterModule } from "@angular/router"` to *app.module.ts*
+- Add `RouterModule.forRoot([{ path: "", component: ProductListComponent },])` to the imports section in *app.module.ts*
+- Add `<router-outlet></router-outlet>` to app.components.ts template.
+
+
 
 ## Angular Project Setup without Global CLI 
 
