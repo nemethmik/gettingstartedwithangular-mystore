@@ -1,9 +1,10 @@
-import { Component } from "@angular/core"
+import { Component, OnDestroy, OnInit } from "@angular/core"
 import {Subscription} from "rxjs"
 import { ToastrService } from "ngx-toastr"
 import {ProductDetailsComponent} from "./product-details.component"
 import {ProductListComponent} from "./product-list.component"
 import {Product,IMyStoreEvents} from "./appconstantsandtypes"
+import {MyStoreEventsService} from "./mystore-events.service"
 
 @Component({
   selector: "app-root",
@@ -14,8 +15,8 @@ import {Product,IMyStoreEvents} from "./appconstantsandtypes"
   `,
   styles: []
 })
-export class AppComponent implements IMyStoreEvents {
-  constructor(private toastr: ToastrService){}
+export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
+  constructor(private toastr: ToastrService, private myStoreEvents:MyStoreEventsService){}
   likeSubscription: Subscription | null = null
   shareSubscription: Subscription | null = null
   notifySubscription: Subscription | null = null
@@ -56,5 +57,18 @@ export class AppComponent implements IMyStoreEvents {
     if(routedComponent instanceof ProductDetailsComponent || routedComponent instanceof ProductListComponent) {
       routedComponent.myStoreEventHandler = null
     }
+  }
+  private shareButtonSubscr: Subscription | null = null
+  private likeButtonSubscr: Subscription | null = null
+  ngOnInit(): void {  
+    this.shareButtonSubscr = this.myStoreEvents.onShareButtonClick.asObservable().subscribe((p:Product)=>{
+      this.toastr.success(`${p.name} shared via Service`, "My Store")
+    })
+    this.likeButtonSubscr = this.myStoreEvents.onLikeButtonClick.asObservable().subscribe((p:Product)=>{
+      this.toastr.success(`${p.name} liked via Service`, "My Store")
+    })
+  }
+  ngOnDestroy():void {
+    this.shareButtonSubscr?.unsubscribe()
   }
 }

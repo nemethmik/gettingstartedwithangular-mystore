@@ -4,6 +4,8 @@ import { Output, EventEmitter } from "@angular/core"
 // import { ToastrService } from "ngx-toastr"
 import { products } from "./products"
 import {Product,RouteParams,IMyStoreEvents} from "./appconstantsandtypes"
+import {MyStoreEventsService} from "./mystore-events.service"
+
 @Component({
   selector: "app-product-details",
   template: `
@@ -36,7 +38,7 @@ import {Product,RouteParams,IMyStoreEvents} from "./appconstantsandtypes"
 export class ProductDetailsComponent implements OnInit { 
   product: Product|undefined
   myStoreEventHandler: IMyStoreEvents | null = null
-  constructor(private route: ActivatedRoute) { } //,private toastr: ToastrService
+  constructor(private route: ActivatedRoute,private myStoreEvents:MyStoreEventsService) { } //,private toastr: ToastrService
   ngOnInit(): void {
     // First get the product id from the current route.
     const routeParams = this.route.snapshot.paramMap
@@ -48,14 +50,16 @@ export class ProductDetailsComponent implements OnInit {
   @Output() like = new EventEmitter<Product>()
   onShareButtonClick(p:Product) {
     // this.toastr.success(`${p.name} has been shared`, "My Store")
-    if(this.myStoreEventHandler) {
-      console.log("ProductDetailsComponent:onShareButtonClick via myStoreEventHandler",p)
-      this.myStoreEventHandler.onShareButtonClick(p)
-    } else this.share.emit(p)
+    // if(this.myStoreEventHandler) {
+    //   console.log("ProductDetailsComponent:onShareButtonClick via myStoreEventHandler",p)
+    //   this.myStoreEventHandler.onShareButtonClick(p)
+    // } else this.share.emit(p)
+    this.myStoreEvents.onShareButtonClick.next(p)
   }
   onLikeButtonClick(p:Product) {
     // this.toastr.success(`${p.name} has been Liked`, "My Store")
-    if(this.myStoreEventHandler) this.myStoreEventHandler.onLikeButtonClick(p)
-    else this.like.emit(p)
+    // if(this.myStoreEventHandler) this.myStoreEventHandler.onLikeButtonClick(p)
+    // else this.like.emit(p)
+    this.myStoreEvents.onLikeButtonClick.next(p)
   }
 }

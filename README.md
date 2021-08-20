@@ -129,7 +129,27 @@ The main idea is that this technique makes a listener/observer to all output emi
 The other option is very similar to the previous one, but instead of subscribing to all and each emitters, an event handler object is sent to the 
 routed (child) components with a bunch of methods, and it's the job of the child component to call the appropriate ones. 
 Actuallzy this is terribly similar to the mobile application architecture I elaborated for a fa,ily of mobile applications (Xamarin Android) using the pattern (Screens - Command Interfaces - Events Interfaces)
-The video explanation for this solution is here [Angular Getting Started 10 Passing an Event Handler Object to the Routed Child Components](https://youtu.be/jCqG-OkoUSY)   
+The video explanation for this solution is here [Angular Getting Started 10 Passing an Event Handler Object to the Routed Child Components](https://youtu.be/jCqG-OkoUSY)
+
+The third option is to create a *MyStoreEventsService*.
+The video explanation for this solution is here [Angular Getting Started 11 My Store Event Hub Service](https://youtu.be/qJ6i6V8Bc3Q)
+- **npm run ng generate service mystore-events --flat** to make the service class directly in the *app* folder.
+- Add an RXJS subject `onShareButtonClick = new Subject<Product>()` and that's all, no need to register in app.modules.
+The @Injectable decorator is enough for the Angular machinery to inject the object to the classes that require it; in our case these are: *ProductListComponent*, *AppComponent* and *ProductDetailsComponent*, so `private myStoreEvents:MyStoreEventsService` should be added to their constructors.
+- *app.components* still remains the central event handler hub, the eservice is only for transfering the events, it is not an event handler;
+it starts a listener with a callback function, which is called when an event/message is fired. Subsriptions should be explicitly closed.
+```
+  private myStoreEvSubscr: Subscription | null = null
+  ngOnInit(): void {  
+    this.myStoreEvSubscr = this.myStoreEvents.onShareButtonClick.asObservable().subscribe((p:Product)=>{
+      this.toastr.success(`${p.name} shared via Service`, "My Store")
+    })
+  }
+  ngOnDestroy():void {
+    this.myStoreEvSubscr?.unsubscribe()
+  }
+```
+- The job of child component (event emitters) is very simple: `this.myStoreEvents.onShareButtonClick.next(p)` 
 
 ----
 # Appendix: The standard Angular Doc for CLI Tasks and Scrits
