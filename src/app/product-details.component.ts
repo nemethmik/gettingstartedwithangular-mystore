@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core"
 import { ActivatedRoute } from "@angular/router"
 import { Output, EventEmitter } from "@angular/core"
-import { ToastrService } from "ngx-toastr"
+// import { ToastrService } from "ngx-toastr"
 import { products } from "./products"
 import {Product,RouteParams} from "./appconstantsandtypes"
 @Component({
@@ -35,7 +35,7 @@ import {Product,RouteParams} from "./appconstantsandtypes"
 })
 export class ProductDetailsComponent implements OnInit { 
   product: Product|undefined
-  constructor(private route: ActivatedRoute,private toastr: ToastrService) { }
+  constructor(private route: ActivatedRoute) { } //,private toastr: ToastrService
   ngOnInit(): void {
     // First get the product id from the current route.
     const routeParams = this.route.snapshot.paramMap
@@ -46,11 +46,11 @@ export class ProductDetailsComponent implements OnInit {
   @Output() share = new EventEmitter<Product>()
   @Output() like = new EventEmitter<Product>()
   onShareButtonClick(p:Product) {
-    this.toastr.success(`${p.name} has been shared`, "My Store")
+    // this.toastr.success(`${p.name} has been shared`, "My Store")
     this.share.emit(p)
   }
   onLikeButtonClick(p:Product) {
-    this.toastr.success(`${p.name} has been Liked`, "My Store")
+    // this.toastr.success(`${p.name} has been Liked`, "My Store")
     this.like.emit(p)
   }
 }

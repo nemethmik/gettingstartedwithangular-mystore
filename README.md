@@ -1,76 +1,4 @@
 # Getting Started with Angular - My Store
-## Adding Material Schematic and Toolbar
-The [My Store](https://angular.io/start#create-the-sample-project) sample application has two components preinitialized on [StackBlitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html). This sample didn't use any UI library, in my version I use [Angular Material](https://material.angular.io/components/toolbar/overview), possibly the most popular UI library for Angular.
-- **npm run ng add @angular/material** to add Angular Material. For theme I picked Indigo/Pink.
-- **npm run ng generate component top-bar** to create a top-bar UI component. Since I use double quotes and no-semicolons lint rules: **npm run fix**
-    - [The API documentation of the toolbar component](https://material.angular.io/components/toolbar/api) explains how to import the module. This import should be done in the *app.module.ts* `import {MatToolbarModule} from "@angular/material/toolbar"` as usual with @NgModule imports.
-    - [The Toolbar examples](https://material.angular.io/components/toolbar/examples) are good starting point to copy paste. The examples require `import {MatIconModule} from "@angular/material/icon"` and `import {MatButtonModule} from "@angular/material/button"`, too.
-        - Don't keep the `<p>` element around the toolbar component, otherwise you will have a nasty white stripe/space above the toolbar.
-
-## Adding Products List
-- The data for the app are coming from a simple TS file *products.ts*, which I copied from the [stackblitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html) starter application.
-- Then I created my second UI component **npm run ng generate component product-list**
-- Since copying had single quotes and semicolons, run *npm run fix*
-- Then I implemented the layout of products and the app.components template according to the stackblitz sample.
-
-## Displaying Data in the Products List
-Just follow the instructions in the [Create the product list](https://angular.io/start#create-the-product-list) section.
-For the section [Pass data to a child component](https://angular.io/start#pass-data-to-a-child-component) 
-create the UI component with **npm run ng generate component product-alerts**
-After the initial implementation with regular HTML, I modified it to use Amgular Material List component. 
-The accompanying video is [Angular Getting Started 06 - Displaying Products, Buttons and Toaster](https://www.youtube.com/watch?v=CtLKlW7BC_E)
-
-Since Angular Material has no toast component, I used [ngx-toastr](https://www.npmjs.com/package/ngx-toastr) instead of the plain browser *alert*.
-**npm install ngx-toastr** Then I followed the instructions on the ngx-toastr documnet page.
-The *"./node_modules/ngx-toastr/toastr.css"* is included in the NPM package, and should be added to *angular.json*
-The ProductListComponent constructor is expecting a ToaterService, which is automatically injected by the Angular machinery.
-
-## Adding Navigation
-[Adding Navigation](https://angular.io/start/start-routing) is the next section in the Angular Getting Started tutorial series.
-It assumes that the router module has been configured. Since I haven't configured router I'll do it manually, which is dead easy.
-### Adding Router to an Existing Project
-What is important that the `<base href="/">` in *index.html* has been set even when you didn't request router installation upon project initialization.
-The [add-routing-existing-angular-project](https://www.samjulien.com/add-routing-existing-angular-project) covers the topic sufficiently.
-- Add `import { RouterModule } from "@angular/router"` to *app.module.ts*
-- Add `RouterModule.forRoot([{ path: "", component: ProductListComponent },])` to the imports section in *app.module.ts*
-- Add `<router-outlet></router-outlet>` to app.components.ts template.
-
-
-### Generating product-details Component 
-- Create the component **npm run ng generate component product-details** and for the sake of making the code less cluttered, since this is just a small demo application, I moved the generated TS file to the app folder from its original subfolder, and then I moved all the componnets to the app folder. This way I mage a flat folder structure. The *--flat* option with component generation will not prevent the CLI to generate a subfolder under app for the component. For generating services it works fine.
-- I created *appconstantsandtypes.ts* to make compiler-guaranteed safe route name and parameter references. 
-    - I relocated the *Product* type definition from *products.ts* demo data into this file.
-- I defined a route for this new *ProductDetailsComponent* in app.module.ts and I rearranged the path definitions
-```
-    RouterModule.forRoot([
-      { path: `${RouteNames.products}/:${RouteParams.productId}`, component: ProductDetailsComponent },
-      { path: `${RouteNames.products}`, component: ProductListComponent },
-      { path: "", redirectTo: `${RouteNames.products}`, pathMatch: "full" },
-    ])
-```
-- Then I added `[routerLink]="[routeName, p.id]"` to the items in the product-list.
-    - To be able to reference the route name I added `routeName = "/" + RouteNames.products` to the class definition.
-    This is terribly important approach in enterprise scale production systems. This way the actual route strings could be changed anyway the application
-    remains functional and doesn't crash.
-- For the *product-details* component Material Cards are used.
-    - I defined the price in the subheader `<mat-card-subtitle>{{ product.price | currency:'EUR' }}</mat-card-subtitle>` using the Euro symbol for the *currency* pipe function.
-    - I kept the two buttons: Like and Share from the example I copied from the Angular Material Card examples page.
-    I created @Output emitters for them for cases where the ProductDetailsComponent were embedded into a component structure. Since, this time it is
-    displayed via router outlet this direct and simple outup-linking is not applicable. For a solution see the next video. 
-```
-  @Output() share = new EventEmitter<Product>()
-  @Output() like = new EventEmitter<Product>()
-  onShareButtonClick(p:Product) {
-    this.toastr.success(`${p.name} has been shared`, "My Store")
-    this.share.emit(p)
-  }
-  onLikeButtonClick(p:Product) {
-    this.toastr.success(`${p.name} has been Liked`, "My Store")
-    this.like.emit(p)
-  }
-```
-- To avoid relying on the browser back button, I added an exlicit back to products list anchort button, where an anchor element was marked with *mat-button*.
-`<a mat-button color="primary" routerLink="/"><mat-icon>home</mat-icon> Products</a>`
 
 ## Angular Project Setup without Global CLI 
 
@@ -116,6 +44,90 @@ When any TS files are opened with these ES lint rules in place, Visual Studio Co
 To automate fixing the issues conveniently the script **"fix": "ng lint --fix"** can be added to package.json. 
 
 To run the application use **npm start**, which executes ng serve. 
+
+## Adding Material Schematic and Toolbar
+The [My Store](https://angular.io/start#create-the-sample-project) sample application has two components preinitialized on [StackBlitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html). This sample didn't use any UI library, in my version I use [Angular Material](https://material.angular.io/components/toolbar/overview), possibly the most popular UI library for Angular.
+- **npm run ng add @angular/material** to add Angular Material. For theme I picked Indigo/Pink.
+- **npm run ng generate component top-bar** to create a top-bar UI component. Since I use double quotes and no-semicolons lint rules: **npm run fix**
+    - [The API documentation of the toolbar component](https://material.angular.io/components/toolbar/api) explains how to import the module. This import should be done in the *app.module.ts* `import {MatToolbarModule} from "@angular/material/toolbar"` as usual with @NgModule imports.
+    - [The Toolbar examples](https://material.angular.io/components/toolbar/examples) are good starting point to copy paste. The examples require `import {MatIconModule} from "@angular/material/icon"` and `import {MatButtonModule} from "@angular/material/button"`, too.
+        - Don't keep the `<p>` element around the toolbar component, otherwise you will have a nasty white stripe/space above the toolbar.
+
+## Adding Products List
+Here is the accompanying video [Angular Getting Started 05 - Adding Product List Component](https://youtu.be/eLTyPu3-fyE).
+- The data for the app are coming from a simple TS file *products.ts*, which I copied from the [stackblitz](https://angular.io/generated/live-examples/getting-started-v0/stackblitz.html) starter application.
+- Then I created my second UI component **npm run ng generate component product-list**
+- Since copying had single quotes and semicolons, run *npm run fix*
+- Then I implemented the layout of products and the app.components template according to the stackblitz sample.
+
+## Displaying Data in the Products List
+Just follow the instructions in the [Create the product list](https://angular.io/start#create-the-product-list) section.
+For the section [Pass data to a child component](https://angular.io/start#pass-data-to-a-child-component) 
+create the UI component with **npm run ng generate component product-alerts**
+After the initial implementation with regular HTML, I modified it to use Amgular Material List component. 
+The accompanying video is [Angular Getting Started 06 - Displaying Products, Buttons and Toaster](https://www.youtube.com/watch?v=CtLKlW7BC_E)
+
+Since Angular Material has no toast component, I used [ngx-toastr](https://www.npmjs.com/package/ngx-toastr) instead of the plain browser *alert*.
+**npm install ngx-toastr** Then I followed the instructions on the ngx-toastr documnet page.
+The *"./node_modules/ngx-toastr/toastr.css"* is included in the NPM package, and should be added to *angular.json*
+The ProductListComponent constructor is expecting a ToaterService, which is automatically injected by the Angular machinery.
+
+## Adding Navigation
+[Adding Navigation](https://angular.io/start/start-routing) is the next section in the Angular Getting Started tutorial series.
+It assumes that the router module has been configured. Since I haven't configured router I'll do it manually, which is dead easy.
+### Adding Router to an Existing Project
+What is important that the `<base href="/">` in *index.html* has been set even when you didn't request router installation upon project initialization.
+The [add-routing-existing-angular-project](https://www.samjulien.com/add-routing-existing-angular-project) covers the topic sufficiently.
+- Add `import { RouterModule } from "@angular/router"` to *app.module.ts*
+- Add `RouterModule.forRoot([{ path: "", component: ProductListComponent },])` to the imports section in *app.module.ts*
+- Add `<router-outlet></router-outlet>` to app.components.ts template.
+
+Here is the accompanying video [Angular Getting Started 07 Adding Router to an Existing Project](https://youtu.be/IO7a87Sq1-k)
+
+### Generating product-details Component 
+The accompanying video explains all details [Angular Getting Started 08 - Product Details with Material Card and Routes](https://youtu.be/ueJXIQkHh9k)
+- Create the component **npm run ng generate component product-details** and for the sake of making the code less cluttered, since this is just a small demo application, I moved the generated TS file to the app folder from its original subfolder, and then I moved all the componnets to the app folder. This way I mage a flat folder structure. The *--flat* option with component generation will not prevent the CLI to generate a subfolder under app for the component. For generating services it works fine.
+- I created *appconstantsandtypes.ts* to make compiler-guaranteed safe route name and parameter references. 
+    - I relocated the *Product* type definition from *products.ts* demo data into this file.
+- I defined a route for this new *ProductDetailsComponent* in app.module.ts and I rearranged the path definitions
+```
+    RouterModule.forRoot([
+      { path: `${RouteNames.products}/:${RouteParams.productId}`, component: ProductDetailsComponent },
+      { path: `${RouteNames.products}`, component: ProductListComponent },
+      { path: "", redirectTo: `${RouteNames.products}`, pathMatch: "full" },
+    ])
+```
+- Then I added `[routerLink]="[routeName, p.id]"` to the items in the product-list.
+    - To be able to reference the route name I added `routeName = "/" + RouteNames.products` to the class definition.
+    This is terribly important approach in enterprise scale production systems. This way the actual route strings could be changed anyway the application
+    remains functional and doesn't crash.
+- For the *product-details* component Material Cards are used.
+    - I defined the price in the subheader `<mat-card-subtitle>{{ product.price | currency:'EUR' }}</mat-card-subtitle>` using the Euro symbol for the *currency* pipe function.
+    - I kept the two buttons: Like and Share from the example I copied from the Angular Material Card examples page.
+    I created @Output emitters for them for cases where the ProductDetailsComponent were embedded into a component structure. Since, this time it is
+    displayed via router outlet this direct and simple outup-linking is not applicable. For a solution see the next video. 
+```
+  @Output() share = new EventEmitter<Product>()
+  @Output() like = new EventEmitter<Product>()
+  onShareButtonClick(p:Product) {
+    this.toastr.success(`${p.name} has been shared`, "My Store")
+    this.share.emit(p)
+  }
+  onLikeButtonClick(p:Product) {
+    this.toastr.success(`${p.name} has been Liked`, "My Store")
+    this.like.emit(p)
+  }
+```
+- To avoid relying on the browser back button, I added an exlicit back to products list anchort button, where an anchor element was marked with *mat-button*.
+`<a mat-button color="primary" routerLink="/"><mat-icon>home</mat-icon> Products</a>`
+
+## Component Communications via Router Outlets
+[Angular: Emit Event Through Router Outlet](https://chinedujude.medium.com/angular-emit-event-through-router-outlet-53b55fbd1f28)
+describes three ways where components, siblings, parents and children could communicate with each other even when they are instantiated via router outlet(s).
+The main idea is that this technique makes a listener/observer to all output emitters of all the components created/instantiated via the router outlet of the app.component. The video [Angular Getting Started 09 Converting App Component to a Messaging Hub for All Routed Components](https://youtu.be/yIsri1HS9_4) explains the solution in detail.
+
+----
+# Appendix: The standard Angular Doc for CLI Tasks and Scrits
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.1.
 
