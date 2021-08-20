@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core"
 import { ToastrService } from "ngx-toastr"
-import { Product, products } from "../products"
+import { products } from "./products"
+import {Product,RouteNames} from "./appconstantsandtypes"
+
 /*
     <div style="padding: 0 16px;"> <!-- display: flex;flex-direction: row; -->
       <h2>Products</h2>
@@ -18,9 +20,9 @@ import { Product, products } from "../products"
     <h2 style="padding: 0 16px;">Products</h2>
     <mat-nav-list>
       <mat-list-item *ngFor="let p of products">
-        <a matLine title="Title {{p.name}} details">{{ p.name }}</a>
+        <a matLine title="Title {{p.name}} details" [routerLink]="[routeName, p.id]" >{{ p.name }}</a>
         <p matLine *ngIf=p.description>Description: {{ p.description }}</p>
-        <button mat-button color="primary" (click)="share(p)"><mat-icon>share</mat-icon>Share</button>
+        <button mat-button color="primary" (click)="share(p)"><mat-icon>share</mat-icon> Share</button>
         <app-product-alerts [product]=p (notify)=onNotify($event)></app-product-alerts>
       </mat-list-item>
     </mat-nav-list>
@@ -29,6 +31,7 @@ import { Product, products } from "../products"
   ]
 })
 export class ProductListComponent { //implements OnInit { ngOnInit(): void {  }
+  routeName = "/" + RouteNames.products
   products = products // This looks weird but TS knows how to interpret it: it creates a member variable and links it to the imported products object 
   constructor(private toastr: ToastrService) { }
   share(p:Product) {

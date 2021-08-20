@@ -36,6 +36,41 @@ The [add-routing-existing-angular-project](https://www.samjulien.com/add-routing
 - Add `<router-outlet></router-outlet>` to app.components.ts template.
 
 
+### Generating product-details Component 
+- Create the component **npm run ng generate component product-details** and for the sake of making the code less cluttered, since this is just a small demo application, I moved the generated TS file to the app folder from its original subfolder, and then I moved all the componnets to the app folder. This way I mage a flat folder structure. The *--flat* option with component generation will not prevent the CLI to generate a subfolder under app for the component. For generating services it works fine.
+- I created *appconstantsandtypes.ts* to make compiler-guaranteed safe route name and parameter references. 
+    - I relocated the *Product* type definition from *products.ts* demo data into this file.
+- I defined a route for this new *ProductDetailsComponent* in app.module.ts and I rearranged the path definitions
+```
+    RouterModule.forRoot([
+      { path: `${RouteNames.products}/:${RouteParams.productId}`, component: ProductDetailsComponent },
+      { path: `${RouteNames.products}`, component: ProductListComponent },
+      { path: "", redirectTo: `${RouteNames.products}`, pathMatch: "full" },
+    ])
+```
+- Then I added `[routerLink]="[routeName, p.id]"` to the items in the product-list.
+    - To be able to reference the route name I added `routeName = "/" + RouteNames.products` to the class definition.
+    This is terribly important approach in enterprise scale production systems. This way the actual route strings could be changed anyway the application
+    remains functional and doesn't crash.
+- For the *product-details* component Material Cards are used.
+    - I defined the price in the subheader `<mat-card-subtitle>{{ product.price | currency:'EUR' }}</mat-card-subtitle>` using the Euro symbol for the *currency* pipe function.
+    - I kept the two buttons: Like and Share from the example I copied from the Angular Material Card examples page.
+    I created @Output emitters for them for cases where the ProductDetailsComponent were embedded into a component structure. Since, this time it is
+    displayed via router outlet this direct and simple outup-linking is not applicable. For a solution see the next video. 
+```
+  @Output() share = new EventEmitter<Product>()
+  @Output() like = new EventEmitter<Product>()
+  onShareButtonClick(p:Product) {
+    this.toastr.success(`${p.name} has been shared`, "My Store")
+    this.share.emit(p)
+  }
+  onLikeButtonClick(p:Product) {
+    this.toastr.success(`${p.name} has been Liked`, "My Store")
+    this.like.emit(p)
+  }
+```
+- To avoid relying on the browser back button, I added an exlicit back to products list anchort button, where an anchor element was marked with *mat-button*.
+`<a mat-button color="primary" routerLink="/"><mat-icon>home</mat-icon> Products</a>`
 
 ## Angular Project Setup without Global CLI 
 
