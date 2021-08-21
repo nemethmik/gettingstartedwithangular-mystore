@@ -86,7 +86,9 @@ Here is the accompanying video [Angular Getting Started 07 Adding Router to an E
 
 ### Generating product-details Component 
 The accompanying video explains all details [Angular Getting Started 08 - Product Details with Material Card and Routes](https://youtu.be/ueJXIQkHh9k)
-- Create the component **npm run ng generate component product-details** and for the sake of making the code less cluttered, since this is just a small demo application, I moved the generated TS file to the app folder from its original subfolder, and then I moved all the componnets to the app folder. This way I mage a flat folder structure. The *--flat* option with component generation will not prevent the CLI to generate a subfolder under app for the component. For generating services it works fine.
+- Create the component **npm run ng generate component product-details** and for the sake of making the code less cluttered, since this is just a small demo application, I moved the generated TS file to the app folder from its original subfolder, and then I moved all the componnets to the app folder. This way I made a flat folder structure. 
+The *--flat* option could also be used after an extra -- parameter like so
+**npm run ng generate component product-details -- --flat** This is a limitation of not using the global ng CLI, tools.
 - I created *appconstantsandtypes.ts* to make compiler-guaranteed safe route name and parameter references. 
     - I relocated the *Product* type definition from *products.ts* demo data into this file.
 - I defined a route for this new *ProductDetailsComponent* in app.module.ts and I rearranged the path definitions
@@ -150,6 +152,15 @@ it starts a listener with a callback function, which is called when an event/mes
   }
 ```
 - The job of child component (event emitters) is very simple: `this.myStoreEvents.onShareButtonClick.next(p)` 
+
+## Managing Data
+[Managing data](https://angular.io/start/start-data#managing-data) is the next iteration in this series.
+- Create a flat cart service **npm run ng generate service cart --flat** Note the extra dash-dash in the command, this is required since we use the ng CLI commands via *npm run*.
+- Create a cart componnet **npm run ng generate component cart -- --flat**
+- Create a shipping componnet **npm run ng generate component shipping -- --flat**
+- [Unwrapping data from an observable](https://angular.io/guide/pipes#unwrapping-data-from-an-observable) explains why to use the *async* pipe in 
+*shipping.component* template. The result and the return value of the `getShippingPrices():Observable<TShippingPrices[]>` in *cart.services* is an observable since it is created with an async HTTP GET request. This brutally elegant solution to make asyncronous data handling in templates: just add the async pipe and the Angular machinery automatically does the job. 
+The video covering this topic is [Angular Getting Started 12 Cart Service and Component](https://youtu.be/q_yFEGm0bpQ)
 
 ----
 # Appendix: The standard Angular Doc for CLI Tasks and Scrits

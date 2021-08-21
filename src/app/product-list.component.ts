@@ -19,7 +19,7 @@ import {MyStoreEventsService} from "./mystore-events.service"
   selector: "app-product-list",
   template: `
     <h2 style="padding: 0 16px;">Products</h2>
-    <mat-nav-list>
+    <mat-nav-list style="height:70vh;overflow-y:scroll;">
       <mat-list-item *ngFor="let p of products">
         <a matLine title="Title {{p.name}} details" [routerLink]="[routeName, p.id]" >{{ p.name }}</a>
         <p matLine *ngIf=p.description>Description: {{ p.description }}</p>

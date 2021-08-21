@@ -1,4 +1,4 @@
-export enum RouteNames {products = "products", home = "home"}
+export enum RouteNames {products = "products", home = "home", cart = "cart", shipping = "shipping"}
 export enum RouteParams {productId = "productId"}
 export interface Product {
     id: number;
@@ -10,4 +10,8 @@ export interface IMyStoreEvents {
   onShareButtonClick(p:Product):void,
   onLikeButtonClick(p:Product):void,
   onNotify(p:Product):void,
+}
+export type TShippingPrices = {
+  type: string, 
+  price: number,
 }

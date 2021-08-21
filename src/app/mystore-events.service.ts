@@ -8,4 +8,5 @@ import { Product } from "./appconstantsandtypes"
 export class MyStoreEventsService {
   onShareButtonClick = new Subject<Product>()
   onLikeButtonClick = new Subject<Product>()
+  onBuyButtonClick = new Subject<Product>()
 }

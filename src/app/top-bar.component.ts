@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core"
-
+import {RouteNames} from "./appconstantsandtypes"
 @Component({
   selector: "app-top-bar",
   template: `
@@ -12,9 +12,9 @@ import { Component, OnInit } from "@angular/core"
       <!--button mat-icon-button aria-label="Example icon-button with heart icon">
         <mat-icon>favorite</mat-icon>
       </button-->
-      <button mat-button aria-label="Checkout button with shopping cart icon">
+      <a mat-button aria-label="Checkout button with shopping cart icon" [routerLink]=cartRouteName>
         <mat-icon>shopping_cart</mat-icon> Checkout
-      </button>
+      </a>
     </mat-toolbar>
   `,
   styles: [
@@ -22,5 +22,6 @@ import { Component, OnInit } from "@angular/core"
   ]
 })
 export class TopBarComponent { //implements OnInit { ngOnInit(): void {}
+  cartRouteName = "/" + RouteNames.cart
   constructor() { }  
 }

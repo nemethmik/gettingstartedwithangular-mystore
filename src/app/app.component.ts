@@ -60,6 +60,7 @@ export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
   }
   private shareButtonSubscr: Subscription | null = null
   private likeButtonSubscr: Subscription | null = null
+  private buyButtonSubscr: Subscription | null = null
   ngOnInit(): void {  
     this.shareButtonSubscr = this.myStoreEvents.onShareButtonClick.asObservable().subscribe((p:Product)=>{
       this.toastr.success(`${p.name} shared via Service`, "My Store")
@@ -67,8 +68,13 @@ export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
     this.likeButtonSubscr = this.myStoreEvents.onLikeButtonClick.asObservable().subscribe((p:Product)=>{
       this.toastr.success(`${p.name} liked via Service`, "My Store")
     })
+    this.buyButtonSubscr = this.myStoreEvents.onBuyButtonClick.asObservable().subscribe((p:Product)=>{
+      this.toastr.success(`${p.name} added to cart`, "My Store")
+    })
   }
   ngOnDestroy():void {
     this.shareButtonSubscr?.unsubscribe()
+    this.likeButtonSubscr?.unsubscribe()
+    this.buyButtonSubscr?.unsubscribe()
   }
 }

@@ -7,6 +7,7 @@ import {MatListModule} from "@angular/material/list"
 import {MatCardModule} from "@angular/material/card"
 import { ToastrModule } from "ngx-toastr"
 import { RouterModule } from "@angular/router"
+import { HttpClientModule } from "@angular/common/http"
 import { AppComponent } from "./app.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { TopBarComponent } from "./top-bar.component"
@@ -14,6 +15,8 @@ import { ProductListComponent } from "./product-list.component"
 import { ProductAlertsComponent } from "./product-alerts.component"
 import { ProductDetailsComponent } from "./product-details.component"
 import {RouteNames,RouteParams} from "./appconstantsandtypes"
+import { CartComponent } from "./cart.component"
+import { ShippingComponent } from "./shipping.component"
 
 @NgModule({
   declarations: [
@@ -21,7 +24,9 @@ import {RouteNames,RouteParams} from "./appconstantsandtypes"
     TopBarComponent,
     ProductListComponent,
     ProductAlertsComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    CartComponent,
+    ShippingComponent
   ],
   imports: [
     BrowserModule,
@@ -33,10 +38,13 @@ import {RouteNames,RouteParams} from "./appconstantsandtypes"
     MatCardModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
+      { path: RouteNames.cart, component: CartComponent },
+      { path: RouteNames.shipping, component: ShippingComponent },
       { path: `${RouteNames.products}/:${RouteParams.productId}`, component: ProductDetailsComponent },
-      { path: `${RouteNames.products}`, component: ProductListComponent },
+      { path: RouteNames.products, component: ProductListComponent },
       { path: "", redirectTo: `${RouteNames.products}`, pathMatch: "full" },
-    ])
+    ]),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

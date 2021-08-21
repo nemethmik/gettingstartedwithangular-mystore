@@ -5,7 +5,7 @@ import { Output, EventEmitter } from "@angular/core"
 import { products } from "./products"
 import {Product,RouteParams,IMyStoreEvents} from "./appconstantsandtypes"
 import {MyStoreEventsService} from "./mystore-events.service"
-
+import { CartService } from "./cart.service"
 @Component({
   selector: "app-product-details",
   template: `
@@ -26,6 +26,7 @@ import {MyStoreEventsService} from "./mystore-events.service"
         <mat-card-actions>
           <button mat-button color="primary" (click)=onLikeButtonClick(product)><mat-icon>favorite</mat-icon> LIKE</button>
           <button mat-button color="primary" (click)=onShareButtonClick(product)><mat-icon>share</mat-icon> SHARE</button>
+          <button mat-button color="primary" (click)=addToCart(product)><mat-icon>shopping_cart</mat-icon>Buy</button>
           <a mat-button color="primary" routerLink="/"><mat-icon>home</mat-icon> Home</a>
         </mat-card-actions>
       </mat-card>
@@ -38,7 +39,7 @@ import {MyStoreEventsService} from "./mystore-events.service"
 export class ProductDetailsComponent implements OnInit { 
   product: Product|undefined
   myStoreEventHandler: IMyStoreEvents | null = null
-  constructor(private route: ActivatedRoute,private myStoreEvents:MyStoreEventsService) { } //,private toastr: ToastrService
+  constructor(private route: ActivatedRoute,private myStoreEvents:MyStoreEventsService,private cartService: CartService) { } //,private toastr: ToastrService
   ngOnInit(): void {
     // First get the product id from the current route.
     const routeParams = this.route.snapshot.paramMap
@@ -48,6 +49,7 @@ export class ProductDetailsComponent implements OnInit {
   }
   @Output() share = new EventEmitter<Product>()
   @Output() like = new EventEmitter<Product>()
+  //@Output() buy = new EventEmitter<Product>()
   onShareButtonClick(p:Product) {
     // this.toastr.success(`${p.name} has been shared`, "My Store")
     // if(this.myStoreEventHandler) {
@@ -61,5 +63,10 @@ export class ProductDetailsComponent implements OnInit {
     // if(this.myStoreEventHandler) this.myStoreEventHandler.onLikeButtonClick(p)
     // else this.like.emit(p)
     this.myStoreEvents.onLikeButtonClick.next(p)
+  }
+  addToCart(p: Product):void {
+    this.cartService.addToCart(p)
+    // window.alert("Your product has been added to the cart!")
+    this.myStoreEvents.onBuyButtonClick.next(p)
   }
 }
