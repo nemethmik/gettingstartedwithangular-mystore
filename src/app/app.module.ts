@@ -5,9 +5,12 @@ import {MatIconModule} from "@angular/material/icon"
 import {MatButtonModule} from "@angular/material/button"
 import {MatListModule} from "@angular/material/list"
 import {MatCardModule} from "@angular/material/card"
+import {MatFormFieldModule} from "@angular/material/form-field"
+import {MatInputModule} from "@angular/material/input"
 import { ToastrModule } from "ngx-toastr"
 import { RouterModule } from "@angular/router"
 import { HttpClientModule } from "@angular/common/http"
+import { ReactiveFormsModule } from "@angular/forms"
 import { AppComponent } from "./app.component"
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations"
 import { TopBarComponent } from "./top-bar.component"
@@ -36,6 +39,8 @@ import { ShippingComponent } from "./shipping.component"
     MatButtonModule,
     MatListModule,
     MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
       { path: RouteNames.cart, component: CartComponent },
@@ -45,6 +50,7 @@ import { ShippingComponent } from "./shipping.component"
       { path: "", redirectTo: `${RouteNames.products}`, pathMatch: "full" },
     ]),
     HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

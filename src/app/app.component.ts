@@ -17,6 +17,9 @@ import {MyStoreEventsService} from "./mystore-events.service"
 })
 export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
   constructor(private toastr: ToastrService, private myStoreEvents:MyStoreEventsService){}
+  onShoppingCardSubmission(p: Product[]): void {
+    this.toastr.success(`${p.length} item(s) have been ordered`, "My Store")
+  }
   likeSubscription: Subscription | null = null
   shareSubscription: Subscription | null = null
   notifySubscription: Subscription | null = null
@@ -61,6 +64,7 @@ export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
   private shareButtonSubscr: Subscription | null = null
   private likeButtonSubscr: Subscription | null = null
   private buyButtonSubscr: Subscription | null = null
+  private purchaseButtonSubscr: Subscription | null = null
   ngOnInit(): void {  
     this.shareButtonSubscr = this.myStoreEvents.onShareButtonClick.asObservable().subscribe((p:Product)=>{
       this.toastr.success(`${p.name} shared via Service`, "My Store")
@@ -71,10 +75,14 @@ export class AppComponent implements IMyStoreEvents, OnInit, OnDestroy  {
     this.buyButtonSubscr = this.myStoreEvents.onBuyButtonClick.asObservable().subscribe((p:Product)=>{
       this.toastr.success(`${p.name} added to cart`, "My Store")
     })
+    this.purchaseButtonSubscr = this.myStoreEvents.onShoppingCardSubmission.asObservable().subscribe((p:Product[])=>{
+      this.onShoppingCardSubmission(p)
+    })
   }
   ngOnDestroy():void {
     this.shareButtonSubscr?.unsubscribe()
     this.likeButtonSubscr?.unsubscribe()
     this.buyButtonSubscr?.unsubscribe()
+    this.purchaseButtonSubscr?.unsubscribe()
   }
 }

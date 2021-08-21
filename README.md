@@ -162,6 +162,11 @@ it starts a listener with a callback function, which is called when an event/mes
 *shipping.component* template. The result and the return value of the `getShippingPrices():Observable<TShippingPrices[]>` in *cart.services* is an observable since it is created with an async HTTP GET request. This brutally elegant solution to make asyncronous data handling in templates: just add the async pipe and the Angular machinery automatically does the job. 
 The video covering this topic is [Angular Getting Started 12 Cart Service and Component](https://youtu.be/q_yFEGm0bpQ)
 
+## Forms Data Input
+This sectin is a remake of [Using forms for user input](https://angular.io/start/start-forms) a really basic form builder intro.
+The video covering this topic is [Angular Getting Started 12 Basic Form Builder](https://youtu.be/m9pBRKMuQlg)
+Check out the [Angular 12 Getting Started 03 - Reactive Forms](https://youtu.be/LpktxKUA5Oo), which gives a lot more details on form development.
+
 ----
 # Appendix: The standard Angular Doc for CLI Tasks and Scrits
 
