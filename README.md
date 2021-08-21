@@ -1,5 +1,7 @@
 # Getting Started with Angular - My Store
 
+Now, the master branch has the main source code.
+
 ## Angular Project Setup without Global CLI 
 
 Angular was designed ab-ovo with a statically typed language TypeScript enforcing a structured approach for teams making large and complex enterprise quality applications. 
