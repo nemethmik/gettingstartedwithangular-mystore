@@ -1,6 +1,6 @@
 # Getting Started with Angular - My Store
 
-Now, the master branch has the main source code.
+Visit [kind-forest-083ec3b10.azurestaticapps.net](https://kind-forest-083ec3b10.azurestaticapps.net) for a live demo on Azure.
 
 ## Angular Project Setup without Global CLI 
 
@@ -168,6 +168,15 @@ The video covering this topic is [Angular Getting Started 12 Cart Service and Co
 This sectin is a remake of [Using forms for user input](https://angular.io/start/start-forms) a really basic form builder intro.
 The video covering this topic is [Angular Getting Started 12 Basic Form Builder](https://youtu.be/m9pBRKMuQlg)
 Check out the [Angular 12 Getting Started 03 - Reactive Forms](https://youtu.be/LpktxKUA5Oo), which gives a lot more details on form development.
+
+## Deployment over to Azure as Static App 
+The full story is on this video [Angular 12 Getting Started 14 Deploying onto Azure as Static Web App](https://youtu.be/JQjqaB5Fs8U)
+It was terribly important to:
+- Merge the development branch into the *master* branch.
+- Rename the build output folder to dist by removing the project name, otherwise it didn'twork with the Azure Static Web App extension.
+
+Keep in mind that since now it is integrated with a live CI/CD pipeline, every committed modifications trigger redeployment on Azure automatically.
+
 
 ----
 # Appendix: The standard Angular Doc for CLI Tasks and Scrits
