@@ -7,7 +7,7 @@ import {RouteNames} from "./appconstantsandtypes"
       <!--button mat-icon-button aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
       </button-->
-      <span>My Store</span>
+      <span>My NG Store</span>
       <span style="flex: 1 1 auto;"  ></span> <!-- style="flex: 1 1 auto;" class="filler" -->
       <!--button mat-icon-button aria-label="Example icon-button with heart icon">
         <mat-icon>favorite</mat-icon>
